@@ -40,3 +40,68 @@ We'll use:
 Not all the Spring libraries have a stable release yet.
 
 <script src="https://gist.github.com/mohitsinha/7b61995de523f8954d5fe0b63e15e848.js"></script>
+
+## 4. Stock Market Example
+
+In this example, we'll simulate stock market transactions and notify the client about them.
+
+The steps involved are:
+
+ - Initialize stocks with their prices
+ - After every second update prices of stock and make stock transactions.
+ - The client will receive the details of the stock transactions after every second.
+
+Let's have a look at the Stock class.
+
+<script src="https://gist.github.com/mohitsinha/975122beb80000efc122f1c4232d6fa8.js"></script>
+
+We'll initialize some random Stocks at the start of the application.
+
+Let's have a look at the StockTransaction class.
+
+<script src="https://gist.github.com/mohitsinha/b7a46782aefdc3a4cfa7589dd5bd631b.js"></script>
+
+## 5. Reactive SSE
+
+We'll create a service which returns a `Flux` of StockTransactions.
+
+<script src="https://gist.github.com/mohitsinha/952e69b8101d0446a82ead544d9ba1fd.js"></script>
+
+We are creating a `Flux` which generates a long value every second. We are then updating the price of every stock.
+
+We are creating another `Flux` which creates a StockTransaction.
+
+The `Flux.zip` method is taking both these `Flux` and combining them.
+
+They'll be combined in a strict sequence (when both `Flux` have emitted their nth item).
+
+We are then returning the second `Flux`.
+
+Hence, the resulting `Flux` will emit a StockTransaction after every second.
+
+## 5. Web API
+
+We'll create an endpoint __GET /stock/transaction__ which will continuously fetch details of the latest transactions happening.
+
+<script src="https://gist.github.com/mohitsinha/2483fe90c1562378055096b6334f5144.js"></script>
+
+`MediaType.APPLICATION_STREAM_JSON_VALUE` signifies that the server will send SSE.
+
+This API will return a response with the header `Content-Type: application/stream+json`.
+
+The cURL commands for testing this is <br/>`curl -v http://localhost:8080/stock/transaction`.
+
+The output obtained will look like this
+
+<script src="https://gist.github.com/mohitsinha/5cd9bfc2a5779b010e525f9f06d54904.js"></script>
+
+## 6. Conclusion
+
+I have tried explaining, with a simple example, how to send SSE using Spring Boot.
+
+You can read more about:
+
+ - [Project Reactor](https://projectreactor.io/)
+
+You can find the complete example on [Github](https://github.com/mohitsinha/spring-boot-reactive-sse).
+
