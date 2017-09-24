@@ -17,7 +17,9 @@ It is the Publisher that notifies the Subscriber of newly available values as th
 
 ## Dependencies
 
+We'll need reactor-core and reactor-test along with JUnit to go through this tutorial.
 
+<script src="https://gist.github.com/mohitsinha/f73a7358e5a23567bd039970e25ad5f5.js"></script>
 
 ## Publishers (Mono & Flux)
 
