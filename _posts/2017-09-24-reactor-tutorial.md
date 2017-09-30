@@ -27,11 +27,30 @@ We'll need reactor-core and reactor-test along with JUnit to go through this tut
 A `Flux` will observe 0 to N items and eventually terminate successfully or not. 
 A `Mono` will observe 0 or 1 item, with `Mono<Void>` hinting at most 0 items.
 
+Let's see with the help of tests how to use this library.
+
 <script src="https://gist.github.com/mohitsinha/8b49633f768a351239a48f21de37de02.js"></script>
+
+In this example, we created an empty `Mono` and a `Flux` and used a 
+`StepVerifier` to test them. The `Publisher`s completed without emitting any object.
 
 <script src="https://gist.github.com/mohitsinha/9650e314c6535e45212760f73c7f7172.js"></script>
 
+We initialized the `Mono` & `Flux` in different ways and verified that they are 
+emitting the expected objects.
+
 <script src="https://gist.github.com/mohitsinha/a091a64541e1188794b9fdd9ca4ee2af.js"></script>
+
+We can use all the Java 8 Stream operations on `Mono` & `Flux`. 
+
+In the first example, we mapped a `Mono` emitting a name to a `Mono` 
+with the same name in lower-case. We verified that the resulting `Mono` emitted 
+the same name in lower-case.
+
+In the second example, we mapped a `Flux` emitting names to a `Flux` with the names 
+in lower-case after applying a filter that passed only names starting with 'k'. 
+We verified that the resulting `Flux` emitted only names starting with 'k' in lower-case.
+
 
 <script src="https://gist.github.com/mohitsinha/a771ac374e48264760c3605273daaf37.js"></script>
 
