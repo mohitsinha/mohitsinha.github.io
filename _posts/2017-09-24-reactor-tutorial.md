@@ -76,11 +76,14 @@ Hence, we see that the sequence remains the same despite the delay.
 
 <script src="https://gist.github.com/mohitsinha/e7f22d658586f45bac4614a044e93b49.js"></script>
 
+We can subscribe to a `Publisher` indefinitely and get the values in a blocking manner. 
+
 ## Conclusion
 
+I have tried explaining with simple examples the very basics of reactor-core. 
 You can read more about [Project Reactor](https://projectreactor.io/docs/core/release/reference/docs/index.html).
 
-To learn how to create Reactive applications using Spring Boot And Reactor you can see this tutorial.
+To learn how to create Reactive applications using Spring Boot And Reactor you can see these tutorials.
 
- - 
- - 
+ - [Spring Boot Reactive Tutorial](https://dzone.com/articles/spring-boot-reactive-tutorial)
+ - [Spring Boot: Server-Sent Events](https://dzone.com/articles/spring-boot-server-sent-events-tutorial)
