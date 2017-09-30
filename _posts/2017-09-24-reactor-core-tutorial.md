@@ -1,6 +1,6 @@
 ---
 layout: blogpost
-title: "Reactor Tutorial"
+title: "Reactor Core Tutorial"
 categories: java
 excerpt: "A tutorial on how to use the various features of Reactor-Core for reactive programming"
 ---
