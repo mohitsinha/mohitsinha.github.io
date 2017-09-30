@@ -10,4 +10,4 @@ Prior to that I have worked on different types of projects which enhanced my ski
 
 I enjoy [writing](/writing/) about things I learn.
 
-One day I might write some articles which will give you more insights on me.
+I constantly search for ways to create better software & applications.

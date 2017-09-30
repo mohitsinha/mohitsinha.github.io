@@ -44,17 +44,35 @@ emitting the expected objects.
 We can use all the Java 8 Stream operations on `Mono` & `Flux`. 
 
 In the first example, we mapped a `Mono` emitting a name to a `Mono` 
-with the same name in lower-case. We verified that the resulting `Mono` emitted 
+emitting the same name in lower-case. We verified that the resulting `Mono` emitted 
 the same name in lower-case.
 
-In the second example, we mapped a `Flux` emitting names to a `Flux` with the names 
+In the second example, we mapped a `Flux` emitting names to a `Flux` emitting the names 
 in lower-case after applying a filter that passed only names starting with 'k'. 
 We verified that the resulting `Flux` emitted only names starting with 'k' in lower-case.
 
 
 <script src="https://gist.github.com/mohitsinha/a771ac374e48264760c3605273daaf37.js"></script>
 
+In the first example, we have 3 `Flux`es emitting the title, first name and the last name. 
+`Flux.zip` is combining them in a strict sequence (when all `Flux`es have emitted their _nth_ item). 
+We then concatenated them to create a `Flux` emitting the full names.
+
+In the second example, we created a `Flux` that generates a long value every _5 ms_. 
+We then combined it with the `Flux` firstNames. Hence, the resulting `Flux` 
+will emit a value after every _5 ms_. We used this `Flux` similarly as in the previous 
+example and verified that the sequence of combination is maintained despite the delay.
+
 <script src="https://gist.github.com/mohitsinha/19179628004cdf36e738a00c9a83990b.js"></script>
+
+Interleaving is a concept in which data is written non-sequentially to improve performance.
+
+We have two `Flux`es, one of them emitting values with a delay. 
+`Flux.mergeWith` merges them into an interleaved sequence. 
+Hence, we see that the sequence has changed.
+
+`Flux.concatWith` merges them into a non-interleaved sequence. 
+Hence, we see that the sequence remains the same despite the delay.
 
 <script src="https://gist.github.com/mohitsinha/e7f22d658586f45bac4614a044e93b49.js"></script>
 
