@@ -61,23 +61,7 @@ Let's check the APIs after we run our project.
 
 `curl 'http://localhost:8080'`
 
-```
-{
-   "_links": {
-       "countries": {
-           "href": "http://localhost:8080/countries{?page,size,sort}",
-           "templated": true
-       },
-       "cities": {
-           "href": "http://localhost:8080/metropolises{?page,size,sort}",
-           "templated": true
-       },
-       "profile": {
-           "href": "http://localhost:8080/profile"
-       }
-   }
-}
-```
+<script src="https://gist.github.com/mohitsinha/45ef59569d763f0f39aac0e9bfc993a0.js"></script>
    
 We get some information about the available APIs. We can further explore about the metadata by 
 hitting the _profile_ API. You can read more about the metadata 
@@ -85,75 +69,14 @@ hitting the _profile_ API. You can read more about the metadata
 
 Let's add a few Countries.
 
-```
-curl 'http://localhost:8080/countries' -X POST -d '{"name":"Japan"}' -H 'Content-Type: application/json'
-curl 'http://localhost:8080/countries' -X POST -d '{"name":"India"}' -H 'Content-Type: application/json'
-curl 'http://localhost:8080/countries' -X POST -d '{"name":"Germany"}' -H 'Content-Type: application/json'
-curl 'http://localhost:8080/countries' -X POST -d '{"name":"Canada"}' -H 'Content-Type: application/json'
-curl 'http://localhost:8080/countries' -X POST -d '{"name":"Australia"}' -H 'Content-Type: application/json'
-```
+<script src="https://gist.github.com/mohitsinha/03ffa6c89f1f50d41fadd65546f6cfc6.js"></script>
 
 Let's fetch a paginated result of Countries with the results sorted by Country name, the 
 page size 2 and the 1st page.
 
 `curl 'http://localhost:8080/countries/?sort=name,asc&page=1&size=2'`
 
-```
-{
-    "_embedded": {
-        "countries": [
-            {
-                "name": "Germany",
-                "_links": {
-                    "self": {
-                        "href": "http://localhost:8080/countries/3"
-                    },
-                    "country": {
-                        "href": "http://localhost:8080/countries/3"
-                    }
-                }
-            },
-            {
-                "name": "India",
-                "_links": {
-                    "self": {
-                        "href": "http://localhost:8080/countries/2"
-                    },
-                    "country": {
-                        "href": "http://localhost:8080/countries/2"
-                    }
-                }
-            }
-        ]
-    },
-    "_links": {
-        "first": {
-            "href": "http://localhost:8080/countries?page=0&size=2&sort=name,asc"
-        },
-        "prev": {
-            "href": "http://localhost:8080/countries?page=0&size=2&sort=name,asc"
-        },
-        "self": {
-            "href": "http://localhost:8080/countries"
-        },
-        "next": {
-            "href": "http://localhost:8080/countries?page=2&size=2&sort=name,asc"
-        },
-        "last": {
-            "href": "http://localhost:8080/countries?page=2&size=2&sort=name,asc"
-        },
-        "profile": {
-            "href": "http://localhost:8080/profile/countries"
-        }
-    },
-    "page": {
-        "size": 2,
-        "totalElements": 5,
-        "totalPages": 3,
-        "number": 1
-    }
-}
-```
+<script src="https://gist.github.com/mohitsinha/31a61a516e4cc1edcc2115a69af0de9a.js"></script>
 
 Apart from the expected countries, we also get the links to different pages and 
 further information that might help in handling pagination better. 
@@ -171,36 +94,17 @@ Let's see what we get when we fetch that City.
 
 `curl 'http://localhost:8080/metropolises/1'`
 
-```
-{
-    "name": "Osaka",
-    "_links": {
-        "self": {
-            "href": "http://localhost:8080/metropolises/1"
-        },
-        "city": {
-            "href": "http://localhost:8080/metropolises/1"
-        },
-        "country": {
-            "href": "http://localhost:8080/metropolises/1/country"
-        }
-    }
-}
-```
+<script src="https://gist.github.com/mohitsinha/73ca2d35dee35cb6e2d0e614fd34b1b1.js"></script>
 
 We are getting a link to the Country associated with it. 
 Let's see what we get in response for it. 
 
-```
-{
-    "name": "Japan",
-    "_links": {
-        "self": {
-            "href": "http://localhost:8080/countries/1"
-        },
-        "country": {
-            "href": "http://localhost:8080/countries/1"
-        }
-    }
-}
-```
+<script src="https://gist.github.com/mohitsinha/84be4347541b040e1e3b44826e577131.js"></script>
+
+## Conclusion
+
+I have tried explaining, with a simple example, how to create REST applications using Spring 
+Data Rest. You can read more about setting up policies and integrating with Spring Security 
+[here](https://docs.spring.io/spring-data/rest/docs/current/reference/html/#security).
+
+You can find the complete example on [Github](https://github.com/mohitsinha/tutorials/tree/master/hateos-spring-example).
