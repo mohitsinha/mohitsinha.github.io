@@ -24,7 +24,8 @@ We'll use Gradle to build our project.
 <script src="https://gist.github.com/mohitsinha/63bbced7d613c88913ffcbe8cf835054.js"></script>
 
 We'll use H2 to run our project. The same concept can be applied for different databases 
-like MongoDB, MySQL etc. The full list of supported databases is given [here](https://docs.spring.io/spring-data/rest/docs/current/reference/html/#getting-started.bootstrap).
+like MongoDB, MySQL etc. The full list of supported databases is given 
+[here](https://docs.spring.io/spring-data/rest/docs/current/reference/html/#getting-started.bootstrap).
 
 ## Spring Data Rest
 
@@ -38,4 +39,21 @@ Let's have a look at our City class.
 
 <script src="https://gist.github.com/mohitsinha/32d1d95bcd90400c980ea70b7968269d.js"></script>
 
-As we are using JPA in our project, we are creating an association between a City and a Country.
+As we are using JPA in our project, we are creating an association between a City and a Country. 
+Many Cities can be associated with a Country.
+
+Let's create the repositories for them.
+
+<script src="https://gist.github.com/mohitsinha/ecfa9307f01184cf04343bc818abf6a1.js"></script>
+
+This will create a repository for Country and also expose the REST endpoints (GET, POST, PUT, DELETE, PATCH) for the same. 
+As `JPARepository` extends `PagingAndSortingRepository`, paging & sorting functionality will be automatically added for the GET endpoint. 
+By default, the path is derived from the uncapitalized, pluralized, simple class name of the domain class being managed. 
+In our case, the path will be _countries_.
+
+<script src="https://gist.github.com/mohitsinha/4909bfffdb1261776f054da98ce56aef.js"></script>
+
+We have customized the path to _metropolises_.
+
+## HATEOAS
+
