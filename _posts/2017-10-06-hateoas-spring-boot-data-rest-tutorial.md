@@ -107,4 +107,4 @@ I have tried explaining, with a simple example, how to create REST applications 
 Data Rest. You can read more about setting up policies and integrating with Spring Security 
 [here](https://docs.spring.io/spring-data/rest/docs/current/reference/html/#security).
 
-You can find the complete example on [Github](https://github.com/mohitsinha/tutorials/tree/master/hateos-spring-example).
+You can find the complete example on [Github](https://github.com/mohitsinha/tutorials/tree/master/hateoas-spring-data-rest-example).
