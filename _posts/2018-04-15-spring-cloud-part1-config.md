@@ -5,6 +5,12 @@ categories: java spring cloud
 excerpt: "A tutorial on how to create a Hypermedia Driven REST Service using Spring Boot"
 ---
 
+Profiles, 
+ Use profiles to describe beans and bean graphs that change from one environment to another. You can activate one or more profiles at a time. Beans that do not have a profile assigned to them are always activated. Beans that have the profile default are activated only when there are no other active profiles.
+ @Profile
+ 
+ Profiles let you describe sets of beans that need to be created differently in one environment versus another. You might, for example, use an embedded H2 javax.sql.DataSource in your local dev profile, but then switch to a javax.sql.DataSource for PostgreSQL
+
 HATEOAS (Hypermedia as the Engine of Application State) specifies that the REST API's 
 should provide enough information to the client to interact with the server. 
 This is different from the SOA (Service-Oriented Architecture) where a client 
