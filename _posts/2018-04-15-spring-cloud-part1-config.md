@@ -13,6 +13,9 @@ Profiles,
 
 refresh scope
 
+spring.cloud.config.server.git.username
+spring.cloud.config.server.git.password
+spring.cloud.config.uri
 
 HATEOAS (Hypermedia as the Engine of Application State) specifies that the REST API's 
 should provide enough information to the client to interact with the server. 
