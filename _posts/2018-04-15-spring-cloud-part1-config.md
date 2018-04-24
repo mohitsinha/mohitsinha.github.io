@@ -2,7 +2,7 @@
 layout: blogpost
 title: "Introduction to Spring Cloud - Config (Part I)"
 categories: java spring cloud
-excerpt: "A tutorial on how to create a Hypermedia Driven REST Service using Spring Boot"
+excerpt: "A tutorial on how to manage configurations for microservices using Spring Cloud."
 ---
 
 Profiles, 
@@ -19,7 +19,9 @@ curl -X POST \
   -d '{}'
   
   
-  
+   A key idea is that the Bus is like a distributed Actuator for a Spring Boot application that is scaled out, but it can also be used as a communication channel between apps
+   
+   
 Spring ApplicationContext event of the type RefreshScopeRefreshedEvent. 
 The default implementation recreates any beans annotated with @RefreshScope, discarding the entire bean and creating it anew
   
@@ -27,106 +29,116 @@ spring.cloud.config.server.git.username
 spring.cloud.config.server.git.password
 spring.cloud.config.uri
 
-HATEOAS (Hypermedia as the Engine of Application State) specifies that the REST API's 
-should provide enough information to the client to interact with the server. 
-This is different from the SOA (Service-Oriented Architecture) where a client 
-and a server interact through a fixed contract. We'll look more into HATEOAS in a while.
+## 1. Overview
 
-Spring Data Rest is built on top of Spring Data, Spring Web MVC & Spring Hateos. 
-It analyzes all the domain models and exposes Hypermedia Driven REST endpoints 
-for them automatically. In the meanwhile, all the features of Spring Data Repositories
-like sorting, pagination etc. are available in these endpoints. 
+Spring 5, which will release later this year, will support building asynchronous and Reactive applications.
 
-We'll see with the help of a very simple example how to implement this.
+This is a simple tutorial showing the new features in Spring and how to create a web application. The application will connect to a database, have basic authentication, and be Reactive.
 
-## Dependencies
+## 2. Reactive Programming
 
-We'll use Gradle to build our project.
+Reactive programming is about building asynchronous, non-blocking, and event-driven applications that can easily scale.
 
-<script src="https://gist.github.com/mohitsinha/63bbced7d613c88913ffcbe8cf835054.js"></script>
+Each event is published to subscribers while ensuring that the subscribers are never overwhelmed.
 
-We'll use H2 to run our project. The same concept can be applied for different databases 
-like MongoDB, MySQL etc. The full list of supported databases is given 
-[here](https://docs.spring.io/spring-data/rest/docs/current/reference/html/#getting-started.bootstrap).
+`Mono` and `Flux` are implementations of the `Publisher` interface. 
+A `Flux` will observe 0 to N items and eventually terminate successfully or not. 
+A `Mono` will observe 0 or 1 item, with `Mono<Void>` hinting at most 0 items.
 
-## Spring Data Rest
+To learn more about Reactive Programming, you can refer to this [article](http://http://sinhamohit.com/writing/reactor-core-tutorial).
 
-In this example, we'll use JPA to create cities and countries.
 
-Let's have a look at our Country class.
+## 3. Dependencies
 
-<script src="https://gist.github.com/mohitsinha/5133fa2253f56303c817e1247173bc99.js"></script>
+We'll use Gradle to build our project. I recommend using Spring Initializr for bootstrapping your project.
 
-Let's have a look at our City class.
+We'll use:
 
-<script src="https://gist.github.com/mohitsinha/32d1d95bcd90400c980ea70b7968269d.js"></script>
+ - Spring Boot 2
+ - Spring Webflux
+ - Spring Reactive Data MongoDB
+ - Spring Security Reactive Webflux
+ - Lombok
 
-As we are using JPA in our project, we are creating an association between a City and a Country. 
-Many Cities can be associated with a Country.
+Not all the Spring libraries have a stable release yet.
 
-Let's create the repositories for them.
+Lombok is used to reduce boilerplate code for models and POJOs. It can generate setters/getters, default constructors, toString, etc. methods automatically.
 
-<script src="https://gist.github.com/mohitsinha/ecfa9307f01184cf04343bc818abf6a1.js"></script>
+<script src="https://gist.github.com/mohitsinha/6138902e1351ca99853c7715a5824e2a.js"></script>
 
-This will create a repository for Country and also expose the REST endpoints (GET, POST, PUT, DELETE, PATCH) for the same. 
-As `JPARepository` extends `PagingAndSortingRepository`, paging & sorting functionality will be automatically added for the GET endpoint. 
-By default, the path is derived from the uncapitalized, pluralized, simple class name of the domain class being managed. 
-In our case, the path will be _countries_.
+## 4. Auto-Configuration
 
-<script src="https://gist.github.com/mohitsinha/4909bfffdb1261776f054da98ce56aef.js"></script>
+We'll leave Spring Boot to automatically configure our application based on the dependencies added.
 
-We have customized the path to _metropolises_.
-
-## HATEOAS
-
-Let's check the APIs after we run our project.
-
-`curl 'http://localhost:8080'`
-
-<script src="https://gist.github.com/mohitsinha/45ef59569d763f0f39aac0e9bfc993a0.js"></script>
+<script src="https://gist.github.com/mohitsinha/45436bc4503b3be888e6de39fc3c9210.js"></script>
    
-We get some information about the available APIs. We can further explore about the metadata by 
-hitting the _profile_ API. You can read more about the metadata 
-[here](https://docs.spring.io/spring-data/rest/docs/current/reference/html/#metadata).
+For using non-default values in our application configuration, we can specify them as properties and Spring Boot will automatically use them to create beans.
 
-Let's add a few Countries.
+<script src="https://gist.github.com/mohitsinha/d1335db9653e98bba9c407258adabb5a.js"></script>
 
-<script src="https://gist.github.com/mohitsinha/03ffa6c89f1f50d41fadd65546f6cfc6.js"></script>
+All beans necessary for MongoDB, Web, and Security will be automatically created.
 
-Let's fetch a paginated result of Countries with the results sorted by Country name, the 
-page size 2 and the 1st page.
+## 5. Database
 
-`curl 'http://localhost:8080/countries/?sort=name,asc&page=1&size=2'`
+We'll be using MongoDB in our example and a simple POJO. A `PersonRepository` bean will be created automatically.
 
-<script src="https://gist.github.com/mohitsinha/31a61a516e4cc1edcc2115a69af0de9a.js"></script>
+<script src="https://gist.github.com/mohitsinha/ee644471ba1a22c0ec8c553937e69976.js"></script>
 
-Apart from the expected countries, we also get the links to different pages and 
-further information that might help in handling pagination better. 
+## 6. Web API
 
-The links to the first, previous, self, next and last pages can directly be used.
+We’ll create REST endpoints for `Person`.
 
-Let's add a City and associate it with a Country.
+Spring 5 added support for creating routes functionally while still supporting the traditional annotation-based way of creating them.
 
-`curl 'http://localhost:8080/metropolises' -X POST -d '{"name":"Osaka", "country":"http://localhost:8080/countries/1"}' -H 'Content-Type: application/json'`
+Let’s look at both of them with the help of examples.
 
-We have to pass the url of the country and this will be mapped to Japan. 
-We saved Japan first, hence its id is 1.
+### 6.1. Annotation-based
 
-Let's see what we get when we fetch that City.
+This is the traditional way of creating endpoints.
 
-`curl 'http://localhost:8080/metropolises/1'`
+<script src="https://gist.github.com/mohitsinha/f0bea8acd69874956f9b1353208522fe.js"></script>
 
-<script src="https://gist.github.com/mohitsinha/73ca2d35dee35cb6e2d0e614fd34b1b1.js"></script>
+This will create a REST endpoint __/person__ which will return all the `Person` records reactively.
 
-We are getting a link to the Country associated with it. 
-Let's see what we get in response for it. 
+### 6.2. Router Functions
 
-<script src="https://gist.github.com/mohitsinha/84be4347541b040e1e3b44826e577131.js"></script>
+This is a new and concise way of creating endpoints.
 
-## Conclusion
+<script src="https://gist.github.com/mohitsinha/1fcd569a1f8e6696edd1ab85f109b4b1.js"></script>
 
-I have tried explaining, with a simple example, how to create REST applications using Spring 
-Data Rest. You can read more about setting up policies and integrating with Spring Security 
-[here](https://docs.spring.io/spring-data/rest/docs/current/reference/html/#security).
+The `nest` method is used to create nested routes, where a group of routes share a common path (prefix), 
+header, or other `RequestPredicate`.
 
-You can find the complete example on [Github](https://github.com/mohitsinha/tutorials/tree/master/hateoas-spring-data-rest-example).
+So, in our case all the corresponding routes have the common prefix __/person__.
+
+In the first route, we have exposed a GET API __/person/{id}__ which will retrieve the corresponding record and return it.
+
+In the second route, we have exposed a POST API __/person__ which will receive a Person object and save it in the DB.
+
+The cURL commands for the same:
+
+<script src="https://gist.github.com/mohitsinha/f1d4709c84484586cb7dc9434af2e230.js"></script>
+
+We should define the routes in a Spring configuration file.
+
+## 7. Security
+
+We'll be using a very simple basic authentication mechanism in our example.
+
+<script src="https://gist.github.com/mohitsinha/ddba3f489cc57e625afd25199b81d54e.js"></script>
+
+We have added some users for our application and assigned different roles to them.
+
+## 8. Conclusion
+
+I have tried explaining, with a simple example, how to build a simple Reactive web application using Spring Boot.
+
+You can read more about:
+
+ - [Spring Web Reactive](https://docs.spring.io/spring-framework/docs/5.0.0.M1/spring-framework-reference/html/web-reactive.html)
+ - [Spring Data Reactive](https://spring.io/blog/2016/11/28/going-reactive-with-spring-data)
+ - [Spring Functional Web Framework](https://spring.io/blog/2016/09/22/new-in-spring-5-functional-web-framework)
+
+You can find the complete example on [Github](https://github.com/mohitsinha/tutorials/tree/master/spring-boot-webflux-reactive-mongo).
+
+
