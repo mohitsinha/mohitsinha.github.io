@@ -13,6 +13,12 @@ Profiles,
 
 refresh scope
 
+curl -X POST \
+  http://localhost:8080/actuator/refresh \
+  -H 'content-type: application/json' \
+  -d '{}'
+  
+  
 spring.cloud.config.server.git.username
 spring.cloud.config.server.git.password
 spring.cloud.config.uri
