@@ -19,6 +19,10 @@ curl -X POST \
   -d '{}'
   
   
+  
+Spring ApplicationContext event of the type RefreshScopeRefreshedEvent. 
+The default implementation recreates any beans annotated with @RefreshScope, discarding the entire bean and creating it anew
+  
 spring.cloud.config.server.git.username
 spring.cloud.config.server.git.password
 spring.cloud.config.uri
