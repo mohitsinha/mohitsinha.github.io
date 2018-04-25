@@ -31,11 +31,11 @@ spring.cloud.config.uri
 
 ## 1. Overview
 
-Spring 5, which will release later this year, will support building asynchronous and Reactive applications.
+Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems (e.g. configuration management, service discovery, circuit breakers, intelligent routing, micro-proxy, control bus, one-time tokens, global locks, leadership election, distributed sessions, cluster state). 
 
-This is a simple tutorial showing the new features in Spring and how to create a web application. The application will connect to a database, have basic authentication, and be Reactive.
+It helps manage the complexity involved in building the distributed system.
 
-## 2. Reactive Programming
+## 2. Microservices
 
 Reactive programming is about building asynchronous, non-blocking, and event-driven applications that can easily scale.
 
@@ -135,10 +135,10 @@ I have tried explaining, with a simple example, how to build a simple Reactive w
 
 You can read more about:
 
- - [Spring Web Reactive](https://docs.spring.io/spring-framework/docs/5.0.0.M1/spring-framework-reference/html/web-reactive.html)
+ - [Spring Cloud](https://projects.spring.io/spring-cloud/spring-cloud.html)
  - [Spring Data Reactive](https://spring.io/blog/2016/11/28/going-reactive-with-spring-data)
  - [Spring Functional Web Framework](https://spring.io/blog/2016/09/22/new-in-spring-5-functional-web-framework)
 
-You can find the complete example on [Github](https://github.com/mohitsinha/tutorials/tree/master/spring-boot-webflux-reactive-mongo).
+You can find the complete example for the [Config Server](https://github.com/mohitsinha/tutorials/tree/master/config-server) & [Library Service](https://github.com/mohitsinha/tutorials/tree/master/library-service) on Github.
 
 
