@@ -31,22 +31,26 @@ spring.cloud.config.uri
 
 ## 1. Overview
 
-Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems (e.g. configuration management, service discovery, circuit breakers, intelligent routing, micro-proxy, control bus, one-time tokens, global locks, leadership election, distributed sessions, cluster state). 
+Spring Cloud provides tools for developers to quickly build some of the common patterns in 
+distributed systems (e.g. configuration management, service discovery, circuit breakers, intelligent routing, micro-proxy, control bus, one-time tokens, global locks, leadership election, distributed sessions, cluster state). 
 
 It helps manage the complexity involved in building the distributed system.
 
 ## 2. Microservices
 
-Reactive programming is about building asynchronous, non-blocking, and event-driven applications that can easily scale.
+Microservices is a software development architectural style, that decomposes the application
+into a collection of loosely coupled services.
 
-Each event is published to subscribers while ensuring that the subscribers are never overwhelmed.
+It improves modularity, thus making the application easier to develop, test & deploy.
 
-`Mono` and `Flux` are implementations of the `Publisher` interface. 
-A `Flux` will observe 0 to N items and eventually terminate successfully or not. 
-A `Mono` will observe 0 or 1 item, with `Mono<Void>` hinting at most 0 items.
+It also makes the development process more efficient by parallelizing small teams to work on
+different services.
 
-To learn more about Reactive Programming, you can refer to this [article](http://http://sinhamohit.com/writing/reactor-core-tutorial).
+There are also various difficulties regarding communication between services, managing configurations, etc 
+in a microservice architecture.
 
+One should go through the [Twelve-Factor App Manifesto](https://12factor.net/) to solve many of the problems
+arising with a Microservice architecture.
 
 ## 3. Dependencies
 
