@@ -5,30 +5,6 @@ categories: java spring cloud
 excerpt: "A tutorial on how to manage configurations for microservices using Spring Cloud."
 ---
 
-Profiles, 
- Use profiles to describe beans and bean graphs that change from one environment to another. You can activate one or more profiles at a time. Beans that do not have a profile assigned to them are always activated. Beans that have the profile default are activated only when there are no other active profiles.
- @Profile
- 
- Profiles let you describe sets of beans that need to be created differently in one environment versus another. You might, for example, use an embedded H2 javax.sql.DataSource in your local dev profile, but then switch to a javax.sql.DataSource for PostgreSQL
-
-refresh scope
-
-curl -X POST \
-  http://localhost:8080/actuator/refresh \
-  -H 'content-type: application/json' \
-  -d '{}'
-  
-  
-   A key idea is that the Bus is like a distributed Actuator for a Spring Boot application that is scaled out, but it can also be used as a communication channel between apps
-   
-   
-Spring ApplicationContext event of the type RefreshScopeRefreshedEvent. 
-The default implementation recreates any beans annotated with @RefreshScope, discarding the entire bean and creating it anew
-  
-spring.cloud.config.server.git.username
-spring.cloud.config.server.git.password
-spring.cloud.config.uri
-
 ## 1. Overview
 
 Spring Cloud provides tools for developers to quickly build some of the common patterns in 
