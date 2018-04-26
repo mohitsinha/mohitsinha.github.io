@@ -38,7 +38,7 @@ It has two components, the Config Server & the Config Client.
 The Config Server is a central place to manage external properties for applications across all environments.
 We could also version the configuration files using Git. It exposes REST API's for clients to connect
 and get the required configuration. We can also leverage [Spring Profiles](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html)
-to manage different configuration files for different profiles(environments).
+to manage different configuration files for different profiles (environments).
 
 ## 3. Dependencies
 
