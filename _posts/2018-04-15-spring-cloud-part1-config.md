@@ -40,17 +40,16 @@ We could also version the configuration files using Git. It exposes REST API's f
 and get the required configuration. We can also leverage [Spring Profiles](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html)
 to manage different configuration files for different profiles (environments).
 
-## 3. Dependencies
+The Config Client binds to the Config Server and initializes Spring `Environment` with remote property sources.
+
+## 4. Dependencies
 
 We'll use Gradle to build our project. I recommend using [Spring Initializr](http://start.spring.io/) for bootstrapping your project.
 
-We'll use:
+For the Config Server we'll use:
 
  - Spring Boot 2
- - Spring Webflux
- - Spring Reactive Data MongoDB
- - Spring Security Reactive Webflux
- - Lombok
+ - Spring Cloud Config Server
 
 Not all the Spring libraries have a stable release yet.
 
