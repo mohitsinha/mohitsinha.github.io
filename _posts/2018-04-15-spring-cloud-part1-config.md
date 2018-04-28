@@ -12,6 +12,8 @@ distributed systems (e.g. configuration management, service discovery, circuit b
 
 It helps manage the complexity involved in building the distributed system.
 
+In this tutorial series, we'll be using some of these patterns. 
+
 ## 2. Microservices
 
 Microservices is a software development architectural style, that decomposes the application
@@ -44,18 +46,23 @@ The Config Client binds to the Config Server and initializes Spring `Environment
 
 ## 4. Dependencies
 
-We'll use Gradle to build our project. I recommend using [Spring Initializr](http://start.spring.io/) for bootstrapping your project.
+We'll use Gradle to build our projects. I recommend using [Spring Initializr](http://start.spring.io/) for bootstrapping your projects.
 
 For the Config Server we'll use:
 
  - Spring Boot 2
  - Spring Cloud Config Server
 
-Not all the Spring libraries have a stable release yet.
+<script src="https://gist.github.com/mohitsinha/ea099e1974f05473f58371cd7fbef19a.js"></script>
 
-Lombok is used to reduce boilerplate code for models and POJOs. It can generate setters/getters, default constructors, toString, etc. methods automatically.
+For the Config Client we'll use:
 
-<script src="https://gist.github.com/mohitsinha/6138902e1351ca99853c7715a5824e2a.js"></script>
+ - Spring Boot 2
+ - Spring Boot Actuator
+ - Spring Boot Webflux
+ - Spring Cloud Starter Config
+
+<script src="https://gist.github.com/mohitsinha/5949f5974790aed8229bb50bbc046aa7.js"></script>
 
 ## 4. Auto-Configuration
 
