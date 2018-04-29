@@ -48,14 +48,18 @@ The Config Client binds to the Config Server and initializes Spring `Environment
 
 We'll use Gradle to build our projects. I recommend using [Spring Initializr](http://start.spring.io/) for bootstrapping your projects.
 
-For the Config Server we'll use:
+### 4.1. Config Server
+
+We'll use:
 
  - Spring Boot 2
  - Spring Cloud Config Server
 
 <script src="https://gist.github.com/mohitsinha/ea099e1974f05473f58371cd7fbef19a.js"></script>
 
-For the Config Client we'll use:
+### 4.2. Config Client
+
+We'll use:
 
  - Spring Boot 2
  - Spring Boot Actuator
@@ -64,9 +68,17 @@ For the Config Client we'll use:
 
 <script src="https://gist.github.com/mohitsinha/5949f5974790aed8229bb50bbc046aa7.js"></script>
 
-## 4. Auto-Configuration
+## 5. Auto-Configuration
 
-We'll leave Spring Boot to automatically configure our application based on the dependencies added.
+We'll leave Spring Boot to automatically configure our application based on the dependencies added
+and the properties specified.
+
+### 5.1. Config Server
+
+<script src="https://gist.github.com/mohitsinha/7096508480a9633050ac513738cd6deb.js"></script>
+
+We'll also have to specify the Git Repository where the configurations are located.
+
 
 <script src="https://gist.github.com/mohitsinha/45436bc4503b3be888e6de39fc3c9210.js"></script>
    
