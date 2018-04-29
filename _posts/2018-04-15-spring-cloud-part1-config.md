@@ -35,7 +35,7 @@ arising with a Microservice architecture.
 Spring Cloud Config provides server and client-side support for externalized configuration 
 in a distributed system.
 
-It has two components, the Config Server & the Config Client.
+It has two components, the __Config Server__ & the __Config Client__.
 
 The Config Server is a central place to manage external properties for applications across all environments.
 We could also version the configuration files using Git. It exposes REST API's for clients to connect
@@ -85,6 +85,11 @@ We'll also have to specify the Git Repository where the configurations are store
 
 `spring.cloud.config.server.git.uri` specifies the Git Repository where the configurations are stored.
 
+You can also pass the user credentials to access the Repository by passing the username & password.
+`spring.cloud.config.server.git.username
+ spring.cloud.config.server.git.password
+`  
+
 ### 5.2. Config Client
 
 <script src="https://gist.github.com/mohitsinha/c59ffa24b3a41f2d7fb6918d8d8720a1.js"></script>
@@ -129,25 +134,40 @@ configuration in the Git Repository.
 
 <script src="https://gist.github.com/mohitsinha/dcf906cb5f9d7710552dcb857ddf650a.js"></script>
 
+A Bean marked with the annotation `RefreshScope` will be recreated when a configuration change occurs
+and a `RefreshScopeRefreshedEvent` is triggered.
 
-The `RefreshScope` annotation is used to create nested routes, where a group of routes share a common path (prefix), 
-header, or other `RequestPredicate`.
+Whenever a configuration change occurs in the Git Repository, we can trigger a `RefreshScopeRefreshedEvent`
+by hitting the Spring Boot Actuator Refresh endpoint. The refresh endpoint will have to be enabled.
 
-So, in our case all the corresponding routes have the common prefix __/person__.
+`management.endpoints.web.exposure.include=refresh` 
 
-In the first route, we have exposed a GET API __/person/{id}__ which will retrieve the corresponding record and return it.
+The cURL command for the Actuator Refresh endpoint:
 
-In the second route, we have exposed a POST API __/person__ which will receive a Person object and save it in the DB.
+```
+curl -X POST 
+  http://localhost:8080/actuator/refresh \
+  -H 'content-type: application/json' \
+  -d '{}'
+```
 
-The cURL commands for the same:
+This will update the configuration values on the Config Client.
 
-<script src="https://gist.github.com/mohitsinha/f1d4709c84484586cb7dc9434af2e230.js"></script>
+We can now check the endpoint and verify if the new configuration value is being reflected or not.
 
-We should define the routes in a Spring configuration file.
+`curl http://localhost:8080/details`
+
+What if there are multiple instances of the Client running, and we want to refresh the configuration values
+in all of them? 
+
+This can be achieved by using __Spring Cloud Bus__. 
+It links the nodes of a distributed system with a lightweight message broker.
+You can read more about it [here](https://cloud.spring.io/spring-cloud-static/spring-cloud-bus/1.2.1.RELEASE/).
 
 ## 7. Conclusion
 
-I have tried explaining, with a simple example, how to build a simple Reactive web application using Spring Boot.
+I have tried explaining, with a simple example, how to manage externalized configurations using Spring Cloud Config.
+In the next tutorial, we'll look at __Service Discovery__.
 
 You can read more about:
 
