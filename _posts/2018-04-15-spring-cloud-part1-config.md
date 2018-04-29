@@ -77,16 +77,27 @@ and the properties specified.
 
 <script src="https://gist.github.com/mohitsinha/7096508480a9633050ac513738cd6deb.js"></script>
 
-We'll also have to specify the Git Repository where the configurations are located.
+We'll also have to specify the Git Repository where the configurations are stored.
 
+<script src="https://gist.github.com/mohitsinha/1cf59b97f546ac2002f9ad695d3a92d6.js"></script>
 
-<script src="https://gist.github.com/mohitsinha/45436bc4503b3be888e6de39fc3c9210.js"></script>
-   
-For using non-default values in our application configuration, we can specify them as properties and Spring Boot will automatically use them to create beans.
+`spring.cloud.config.server.git.uri` specifies the Git Repository where the configurations are stored.
 
-<script src="https://gist.github.com/mohitsinha/d1335db9653e98bba9c407258adabb5a.js"></script>
+### 5.2. Config Client
 
-All beans necessary for MongoDB, Web, and Security will be automatically created.
+<script src="https://gist.github.com/mohitsinha/c59ffa24b3a41f2d7fb6918d8d8720a1.js"></script>
+
+<script src="https://gist.github.com/mohitsinha/18f6e72bdafbe29cb313a4dde1856716.js"></script>
+
+`spring.application.name` is used to fetch the correct configuration file from the Git Repository.
+
+The bootstrap properties are added with higher precedence, hence they cannot be overridden
+by local configuration. You can read more about it [here](https://cloud.spring.io/spring-cloud-static/spring-cloud-commons/2.0.0.M9/multi/multi__spring_cloud_context_application_context_services.html#_the_bootstrap_application_context).
+
+<script src="https://gist.github.com/mohitsinha/285c7cf1773fca124ae191c071210f30.js"></script>   
+
+`management.endpoints.web.exposure.include=refresh` exposes the refresh actuator endpoint. 
+We'll look at it in a while.
 
 ## 5. Database
 
