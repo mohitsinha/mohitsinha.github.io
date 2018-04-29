@@ -99,11 +99,6 @@ by local configuration. You can read more about it [here](https://cloud.spring.i
 `management.endpoints.web.exposure.include=refresh` exposes the refresh actuator endpoint. 
 We'll look at it in a while.
 
-## 5. Database
-
-We'll be using MongoDB in our example and a simple POJO. A `PersonRepository` bean will be created automatically.
-
-<script src="https://gist.github.com/mohitsinha/ee644471ba1a22c0ec8c553937e69976.js"></script>
 
 ## 6. Web API
 
