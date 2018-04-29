@@ -40,7 +40,9 @@ It has two components, the Config Server & the Config Client.
 The Config Server is a central place to manage external properties for applications across all environments.
 We could also version the configuration files using Git. It exposes REST API's for clients to connect
 and get the required configuration. We can also leverage [Spring Profiles](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html)
-to manage different configuration files for different profiles (environments).
+to manage different configuration files for different profiles (environments). 
+
+For eg: we may decide to use an embedded H2 in our local dev profile, but use PostgreSQL in our prod profile.
 
 The Config Client binds to the Config Server and initializes Spring `Environment` with remote property sources.
 
@@ -90,6 +92,8 @@ We'll also have to specify the Git Repository where the configurations are store
 <script src="https://gist.github.com/mohitsinha/18f6e72bdafbe29cb313a4dde1856716.js"></script>
 
 `spring.application.name` is used to fetch the correct configuration file from the Git Repository.
+It's a very important property when used with Spring Cloud projects. 
+We'll see this later in this tutorial series.
 
 The bootstrap properties are added with higher precedence, hence they cannot be overridden
 by local configuration. You can read more about it [here](https://cloud.spring.io/spring-cloud-static/spring-cloud-commons/2.0.0.M9/multi/multi__spring_cloud_context_application_context_services.html#_the_bootstrap_application_context).
@@ -100,29 +104,33 @@ by local configuration. You can read more about it [here](https://cloud.spring.i
 We'll look at it in a while.
 
 
-## 6. Web API
+## 6. REST API
 
-We’ll create REST endpoints for `Person`.
+Let’s look at some of the REST API's that are automatically created to manage and monitor 
+these services.
 
-Spring 5 added support for creating routes functionally while still supporting the traditional annotation-based way of creating them.
+### 6.1. Config Server
 
-Let’s look at both of them with the help of examples.
+Let's look at the configuration values for the application __libary-service__.
 
-### 6.1. Annotation-based
+`curl http://localhost:8888/library-service/default`
 
-This is the traditional way of creating endpoints.
+The output obtained will look like this
 
-<script src="https://gist.github.com/mohitsinha/f0bea8acd69874956f9b1353208522fe.js"></script>
+<script src="https://gist.github.com/mohitsinha/ffeff49c82e50fa26d25a97623be6576.js"></script>
 
-This will create a REST endpoint __/person__ which will return all the `Person` records reactively.
+It gives details about the Git Repository for the configuration files, the configuration values, etc.
+Here we can see the value for the property _library.name_. 
 
-### 6.2. Router Functions
+### 6.2. Config Client
 
-This is a new and concise way of creating endpoints.
+We'll add a web endpoint that will use the property _library.name_ defined in the 
+configuration in the Git Repository.
 
-<script src="https://gist.github.com/mohitsinha/1fcd569a1f8e6696edd1ab85f109b4b1.js"></script>
+<script src="https://gist.github.com/mohitsinha/dcf906cb5f9d7710552dcb857ddf650a.js"></script>
 
-The `nest` method is used to create nested routes, where a group of routes share a common path (prefix), 
+
+The `RefreshScope` annotation is used to create nested routes, where a group of routes share a common path (prefix), 
 header, or other `RequestPredicate`.
 
 So, in our case all the corresponding routes have the common prefix __/person__.
@@ -137,23 +145,13 @@ The cURL commands for the same:
 
 We should define the routes in a Spring configuration file.
 
-## 7. Security
-
-We'll be using a very simple basic authentication mechanism in our example.
-
-<script src="https://gist.github.com/mohitsinha/ddba3f489cc57e625afd25199b81d54e.js"></script>
-
-We have added some users for our application and assigned different roles to them.
-
-## 8. Conclusion
+## 7. Conclusion
 
 I have tried explaining, with a simple example, how to build a simple Reactive web application using Spring Boot.
 
 You can read more about:
 
  - [Spring Cloud](https://projects.spring.io/spring-cloud/spring-cloud.html)
- - [Spring Data Reactive](https://spring.io/blog/2016/11/28/going-reactive-with-spring-data)
- - [Spring Functional Web Framework](https://spring.io/blog/2016/09/22/new-in-spring-5-functional-web-framework)
 
 You can find the complete example for the [Config Server](https://github.com/mohitsinha/tutorials/tree/master/config-server) & [Library Service](https://github.com/mohitsinha/tutorials/tree/master/library-service) on Github.
 
