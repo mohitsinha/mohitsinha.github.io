@@ -10,7 +10,7 @@ excerpt: "A tutorial on how to manage configurations for microservices using Spr
 Spring Cloud provides tools for developers to quickly build some of the common patterns in 
 distributed systems (e.g. configuration management, service discovery, circuit breakers, intelligent routing, micro-proxy, control bus, one-time tokens, global locks, leadership election, distributed sessions, cluster state). 
 
-It helps manage the complexity involved in building the distributed system.
+It helps manage the complexity involved in building a distributed system.
 
 In this tutorial series, we'll be using some of these patterns. 
 
