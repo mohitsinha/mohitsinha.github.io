@@ -1,35 +1,45 @@
 ---
 layout: blogpost
-title: "Introduction to HATEOAS With Spring Boot Data Rest"
-categories: java spring
-excerpt: "A tutorial on how to create a Hypermedia Driven REST Service using Spring Boot"
+title: "Spring Boot Hibernate Tips"
+categories: java spring hibernate
+excerpt: "A tutorial on how to create a Web Application using Spring Boot & Hibernate"
 ---
 
 ## 1. Overview
 
-HATEOAS (Hypermedia as the Engine of Application State) specifies that the REST API's 
-should provide enough information to the client to interact with the server. 
-This is different from the SOA (Service-Oriented Architecture) where a client 
-and a server interact through a fixed contract. We'll look more into HATEOAS in a while.
+Hibernate needs no introduction. It is the most popular ORM out there for Java.
 
-Spring Data Rest is built on top of Spring Data, Spring Web MVC & Spring Hateos. 
-It analyzes all the domain models and exposes Hypermedia Driven REST endpoints 
-for them automatically. In the meanwhile, all the features of Spring Data Repositories
-like sorting, pagination etc. are available in these endpoints. 
-
-We'll see with the help of a very simple example how to implement this.
+This tutorial isn't about Hibernate or Spring Boot, there are tons of them out there.
+We'll look into some common mistakes that you may make when using them together and how to fix them.
 
 ## 2. Dependencies
 
-We'll use Gradle to build our project.
+We'll use Gradle to build our project. I recommend using [Spring Initializr](http://start.spring.io/) for bootstrapping your project.
 
-<script src="https://gist.github.com/mohitsinha/63bbced7d613c88913ffcbe8cf835054.js"></script>
+We'll use:
 
-We'll use H2 to run our project. The same concept can be applied for different databases 
-like MongoDB, MySQL etc. The full list of supported databases is given 
-[here](https://docs.spring.io/spring-data/rest/docs/current/reference/html/#getting-started.bootstrap).
+ - Spring Boot 2
+ - Spring Webflux
+ - Spring Data Jpa
+ - Spring Data Envers
+ - Jackson Annotations
+ - Jackson DataType Hibernate
+ - H2 Database
+ - Lombok
 
-## 3. Spring Data Rest
+Spring Data Envers allows us to access entity revisions managed by Hibernate Envers.
+
+Jackson Annotations will help us to avoid the common Stack Overflow errors that are caused by JPA relationships.
+
+Jackson DataType Hibernate Module will help with Hibernate types and lazy-loading aspects.
+
+We'll look into all of these in a while.
+
+<script src="https://gist.github.com/mohitsinha/361a23f1d275d030ba8a3c4061ad06ee.js"></script>
+
+We'll use H2 to run our project.
+
+## Spring Data Rest
 
 In this example, we'll use JPA to create cities and countries.
 
@@ -57,7 +67,7 @@ In our case, the path will be _countries_.
 
 We have customized the path to _metropolises_.
 
-## 4. HATEOAS
+## HATEOAS
 
 Let's check the APIs after we run our project.
 
@@ -103,7 +113,7 @@ Let's see what we get in response for it.
 
 <script src="https://gist.github.com/mohitsinha/84be4347541b040e1e3b44826e577131.js"></script>
 
-## 5. Conclusion
+## Conclusion
 
 I have tried explaining, with a simple example, how to create REST applications using Spring 
 Data Rest. You can read more about setting up policies and integrating with Spring Security 
