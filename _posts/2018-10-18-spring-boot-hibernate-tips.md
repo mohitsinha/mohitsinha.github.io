@@ -9,6 +9,8 @@ excerpt: "A tutorial on how to create a Web Application using Spring Boot & Hibe
 
 Hibernate needs no introduction. It is the most popular ORM out there for Java.
 
+Similarly, Spring Boot is the most powerful, and easy to use framework out there for Java.
+
 This tutorial isn't about Hibernate or Spring Boot, there are tons of them out there.
 We'll look into some common mistakes that you may make when using them together and how to fix them.
 
@@ -41,11 +43,26 @@ We'll use H2 to run our project.
 
 ## Spring Data Rest
 
-In this example, we'll use JPA to create cities and countries.
+In this example, we'll use JPA to create universities and students.
 
-Let's have a look at our Country class.
+It's always a good idea to store common logic & properties in a superclass.
 
-<script src="https://gist.github.com/mohitsinha/5133fa2253f56303c817e1247173bc99.js"></script>
+We will create a superclass for our entities and store common properties in it.
+
+Let's have a look at our BaseEntity class.
+
+<script src="https://gist.github.com/mohitsinha/bfb4a195cdbdeef883f2b2525458dcc1.js"></script>
+
+One thing you can notice is that I haven't used the `@Data` annotation on our class.
+`@Data` annotation automatically adds `@ToString` annotation which may cause Stack Overflow errors.
+Hence it's better to manage the annotations manually.
+
+`@MappedSuperclass` annotation allows entities to inherit properties from a base class.
+This annotation is very important if you want to inherit properties from a base class.
+
+`@EntityListeners({AuditingEntityListener.class})` enables Auditing. We are using `@CreatedDate` & `@LastModifiedDate` to capture when the entity was created or modified. This will be taken care by Spring Data JPA.
+
+
 
 Let's have a look at our City class.
 
