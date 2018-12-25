@@ -41,7 +41,7 @@ We'll look into all of these in a while.
 
 We'll use H2 to run our project.
 
-## Spring Data Rest
+## 3. Entities
 
 In this example, we'll use JPA to create universities and students.
 
@@ -53,7 +53,7 @@ Let's have a look at our BaseEntity class.
 
 <script src="https://gist.github.com/mohitsinha/bfb4a195cdbdeef883f2b2525458dcc1.js"></script>
 
-One thing you can notice is that I haven't used the `@Data` annotation on our class.
+One thing you can notice is that I haven't used the `@Data` annotation  from Lombok on our class.
 `@Data` annotation automatically adds `@ToString` annotation which may cause Stack Overflow errors.
 Hence it's better to manage the annotations manually.
 
@@ -62,29 +62,20 @@ This annotation is very important if you want to inherit properties from a base 
 
 `@EntityListeners({AuditingEntityListener.class})` enables Auditing. We are using `@CreatedDate` & `@LastModifiedDate` to capture when the entity was created or modified. This will be taken care by Spring Data JPA.
 
+`@JsonIdentityInfo` will avoid the Stack Overflow errors when converting our entities to JSON.  
+This annotation is required to break the infinite cycle due to the bi-directional relationships between our entities. 
 
+You may also want to check out `@JsonBackReference` & `@JsonManagedReference` to see if they fit better with your requirements.
 
-Let's have a look at our City class.
+Let's have a look at our University & Student entities.
 
-<script src="https://gist.github.com/mohitsinha/32d1d95bcd90400c980ea70b7968269d.js"></script>
+<script src="https://gist.github.com/mohitsinha/10c13b0e5cf253f53a41a3dd4c9d810c.js"></script>
 
-As we are using JPA in our project, we are creating an association between a City and a Country. 
-Many Cities can be associated with a Country.
+<script src="https://gist.github.com/mohitsinha/87558ff5ab42e4a29631973355dd8665.js"></script>
 
-Let's create the repositories for them.
+`@Audited` will enable Hibernate managing the auditing (tracking changes) on that Entity.
 
-<script src="https://gist.github.com/mohitsinha/ecfa9307f01184cf04343bc818abf6a1.js"></script>
-
-This will create a repository for Country and also expose the REST endpoints (GET, POST, PUT, DELETE, PATCH) for the same. 
-As `JPARepository` extends `PagingAndSortingRepository`, paging & sorting functionality will be automatically added for the GET endpoint. 
-By default, the path is derived from the uncapitalized, pluralized, simple class name of the domain class being managed. 
-In our case, the path will be _countries_.
-
-<script src="https://gist.github.com/mohitsinha/4909bfffdb1261776f054da98ce56aef.js"></script>
-
-We have customized the path to _metropolises_.
-
-## HATEOAS
+## 4. Coniguration
 
 Let's check the APIs after we run our project.
 
