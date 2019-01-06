@@ -23,7 +23,7 @@ We'll use:
 
  - Spring Boot 2
  - Spring Webflux
- - Spring Data Jpa
+ - Spring Data JPA
  - Spring Data Envers
  - Jackson Annotations
  - Jackson DataType Hibernate
