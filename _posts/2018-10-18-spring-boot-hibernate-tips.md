@@ -12,7 +12,8 @@ Hibernate needs no introduction. It is the most popular ORM out there for Java.
 Similarly, Spring Boot is the most powerful, and easy to use framework out there for Java.
 
 This tutorial isn't about Hibernate or Spring Boot, there are tons of them out there.
-We'll look into some common mistakes that you may make when using them together and how to fix them.
+
+We'll look into some common errors that you may run into when using them together and how to fix them.
 
 ## 2. Dependencies
 
@@ -75,56 +76,53 @@ Let's have a look at our University & Student entities.
 
 `@Audited` will enable Hibernate managing the auditing (tracking changes) on that Entity.
 
-## 4. Coniguration
+## 4. Configuration
 
-Let's check the APIs after we run our project.
+Let's check the configurations required to run our project.
 
-`curl 'http://localhost:8080'`
+### 4.1. Hibernate Jackson Module
 
-<script src="https://gist.github.com/mohitsinha/45ef59569d763f0f39aac0e9bfc993a0.js"></script>
-   
-We get some information about the available APIs. We can further explore about the metadata by 
-hitting the _profile_ API. You can read more about the metadata 
-[here](https://docs.spring.io/spring-data/rest/docs/current/reference/html/#metadata).
+<script src="https://gist.github.com/mohitsinha/8ff16cf1e9876fddf9d08b9302530b73.js"></script>
 
-Let's add a few Countries.
+We are registering a new Jackson Module.   
+Spring Boot will auto-detect it and register it to the `ObjectMapper` bean.
 
-<script src="https://gist.github.com/mohitsinha/03ffa6c89f1f50d41fadd65546f6cfc6.js"></script>
+### 4.2. Hibernate Envers
 
-Let's fetch a paginated result of Countries with the results sorted by Country name, the 
-page size 2 and the 1st page.
+To enable Envers auditing, we have to extend our Repositories with `RevisionRepository`.
 
-`curl 'http://localhost:8080/countries/?sort=name,asc&page=1&size=2'`
+Let's have a look at our `UniversityRepository`.
 
-<script src="https://gist.github.com/mohitsinha/31a61a516e4cc1edcc2115a69af0de9a.js"></script>
+<script src="https://gist.github.com/mohitsinha/0026d1b9599315996b1dc96c7bb3cce5.js"></script>
 
-Apart from the expected countries, we also get the links to different pages and 
-further information that might help in handling pagination better. 
+We'll have to similarly do this for our `StudentRepository`.
 
-The links to the first, previous, self, next and last pages can directly be used.
+<script src="https://gist.github.com/mohitsinha/17ef59d581502218104e89f074e935db.js"></script>
 
-Let's add a City and associate it with a Country.
+We also have to annotate our main class with `@EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)`.
 
-`curl 'http://localhost:8080/metropolises' -X POST -d '{"name":"Osaka", "country":"http://localhost:8080/countries/1"}' -H 'Content-Type: application/json'`
+We'll look at the main class in a while after going through other annotations that we need.
 
-We have to pass the url of the country and this will be mapped to Japan. 
-We saved Japan first, hence its id is 1.
+### 4.3. Spring Data Auditing
 
-Let's see what we get when we fetch that City.
+To enable this, we'll have to annotate our main class with `@EnableJpaAuditing`.
 
-`curl 'http://localhost:8080/metropolises/1'`
+Let's look at it.
 
-<script src="https://gist.github.com/mohitsinha/73ca2d35dee35cb6e2d0e614fd34b1b1.js"></script>
+<script src="https://gist.github.com/mohitsinha/596151dbff1bc00159782477912c27d5.js"></script>
 
-We are getting a link to the Country associated with it. 
-Let's see what we get in response for it. 
-
-<script src="https://gist.github.com/mohitsinha/84be4347541b040e1e3b44826e577131.js"></script>
-
-## Conclusion
+## 5. Conclusion
 
 I have tried explaining, with a simple example, how to create REST applications using Spring 
-Data Rest. You can read more about setting up policies and integrating with Spring Security 
-[here](https://docs.spring.io/spring-data/rest/docs/current/reference/html/#security).
+Boot & Hibernate. 
 
-You can find the complete example on [Github](https://github.com/mohitsinha/tutorials/tree/master/hateoas-spring-data-rest-example).
+This might solve some of your Stack Overflow errors.  
+Else, you might want to consider writing your own Data Transfer Objects (DTO).
+
+If you need support for data types that aren't supported by the core Hibernate ORM, you might want to check out this [library](https://github.com/vladmihalcea/hibernate-types).
+
+You can read more about:
+
+ - [Spring Data JPA](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)
+
+You can find the complete example on [Github](https://github.com/mohitsinha/tutorials/tree/master/hibernate-tips).
